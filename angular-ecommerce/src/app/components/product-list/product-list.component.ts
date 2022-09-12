@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/common/product';
 import { ProductService } from 'src/app/services/product.service';
 import { ActivatedRoute } from '@angular/router';
+import { CartItem } from 'src/app/common/cart-item';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-product-list',
@@ -23,6 +25,7 @@ export class ProductListComponent implements OnInit {
   previousKeyword: string = "";
 
   constructor(private productService: ProductService,
+    private cartService: CartService,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -91,12 +94,6 @@ export class ProductListComponent implements OnInit {
     this.productService.getProductListPaginate(this.thePageNumber - 1, this.thePageSize, this.currentCategoryId).subscribe(this.processResult());
   }
 
-  updatePageSize(pageSize: string) {
-    this.thePageSize = +pageSize;
-    this.thePageNumber = 1;
-    this.listProducts();
-  }
-
   processResult() {
     return (data: any) => {
       this.products = data._embedded.products;
@@ -104,6 +101,21 @@ export class ProductListComponent implements OnInit {
       this.thePageSize = data.page.size;
       this.theTotalElements = data.page.totalElements;
     };
+  }
+
+  updatePageSize(pageSize: string) {
+    this.thePageSize = +pageSize;
+    this.thePageNumber = 1;
+    this.listProducts();
+  }
+
+  addToCart(theProduct: Product) {
+    console.log(`Adding to cart: ${theProduct.name}, ${theProduct.unitPrice}`);
+
+    // TODO ... do the real work
+    const theCartItem = new CartItem(theProduct);
+
+    this.cartService.addToCart(theCartItem);
   }
 
 }

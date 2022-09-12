@@ -10,8 +10,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
 import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
+import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 
 const routes: Routes = [
   /*
@@ -19,8 +21,9 @@ const routes: Routes = [
   First match winds.
   Start from most specific to generic
   */
-  { path: 'products/:id', component: ProductDetailsComponent},
-  { path: 'search/:keyword', component: ProductListComponent},
+  { path: 'cart-details', component: CartDetailsComponent },
+  { path: 'products/:id', component: ProductDetailsComponent },
+  { path: 'search/:keyword', component: ProductListComponent },
   { path: 'category/:id', component: ProductListComponent }, // when path matches, create new instance of component
   { path: 'category', component: ProductListComponent },
   { path: 'products', component: ProductListComponent },
@@ -37,7 +40,8 @@ const routes: Routes = [
     ProductCategoryMenuComponent,
     SearchComponent,
     ProductDetailsComponent,
-    CartStatusComponent
+    CartStatusComponent,
+    CartDetailsComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
